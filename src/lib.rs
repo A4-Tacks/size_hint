@@ -39,6 +39,21 @@ where
     }
 }
 
+impl<I> DoubleEndedIterator for SizeHint<I>
+where
+    I: DoubleEndedIterator,
+{
+    #[inline]
+    fn next_back(&mut self) -> Option<Self::Item> {
+        if self.hint > 0 {
+            self.hint -= 1;
+        }
+        self.iter.next_back()
+    }
+}
+
+impl<I> core::iter::FusedIterator for SizeHint<I> where I: core::iter::FusedIterator {}
+
 #[cfg(test)]
 mod tests {
 
