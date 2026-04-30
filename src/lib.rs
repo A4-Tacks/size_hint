@@ -1,3 +1,5 @@
+#![no_std]
+
 pub struct SizeHint<I> {
     iter: I,
     hint: usize,
@@ -41,9 +43,11 @@ where
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
 
     use crate::HintSize;
-    use std::iter::successors;
+    use core::iter::successors;
+    use alloc::vec::Vec;
 
     #[test]
     fn simple() {
