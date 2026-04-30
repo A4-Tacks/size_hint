@@ -37,6 +37,25 @@ where
         let (_approx, exact) = self.iter.size_hint();
         (self.hint, exact)
     }
+
+    #[inline]
+    fn nth(&mut self, n: usize) -> Option<Self::Item> {
+        self.hint = self.hint.saturating_sub(n + 1);
+        self.iter.nth(n)
+    }
+
+    #[inline]
+    fn fold<B, F>(self, init: B, f: F) -> B
+    where
+        F: FnMut(B, Self::Item) -> B,
+    {
+        self.iter.fold(init, f)
+    }
+
+    #[inline]
+    fn count(self) -> usize {
+        self.iter.count()
+    }
 }
 
 #[cfg(test)]
